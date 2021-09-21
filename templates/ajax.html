@@ -1,0 +1,36 @@
+<script>
+    $('#btnaddnote').click(function(){
+        console.log("button clicked")
+        /* ids ka use karke data ko capture karo*/
+        let notetitle = $("#notetitle").val()
+        let notedesc = $("#notedesc").val()
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        if(notetitle == ""){
+            console.log("pleasse enter noettitle");
+
+        }else if(notedesc==""){
+            console.log("pleasse enter notedescription");
+            
+        }else{
+            //console.log(notetitle);
+            //console.log(notedesc);
+            mydata = {note_title:notetitle,note_description:notedesc,csrfmiddlewaretoken:csr};
+            $.ajax({
+                url: "{% url 'userprofile' %}",
+                method:"POST",
+                data:mydata,
+                success:function(data){
+                    //server response will come in this data
+                    console.log(data);
+                }
+            })
+
+        }
+    });
+
+    
+
+    
+
+
+</script>

@@ -1,0 +1,80 @@
+{% extends 'navigation.html' %}
+{% block userloginactive %}active{% endblock userloginactive %}
+{% block body %}
+
+<style>
+    /* #ff9800  */
+    .warning {
+        border-color: rgb(9, 255, 0);
+        color: rgb(9, 255, 0);
+    }
+
+    .warning:hover {
+        background: rgb(9, 255, 0);
+        color: white;
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2 class="text-center" style="font-family: cursive;font-weight: bold;">New User..</h2>
+            <hr>
+            <h5 class="text-center" style="font-family: cursive;font-weight: bold;">If U are New User Please Create an Account By clicking this Button Below..</h5>
+            <a href="/register"><button class="btn warning">Create an Account</button></a>
+        </div>
+
+        <div class="col-sm-6">
+            <h2 class="text-center" style="font-family: cursive;font-weight: bold;">User Login</h2>
+            <hr>
+            <form method="POST" action="/userlogin/">
+                {% csrf_token %}
+                <div class="mb-3">
+                  {{form.as_p}}
+                  
+                </div>
+                
+                <button type="submit" class="btn warning">Submit</button>
+            </form>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+{% ifequal error "no" %}
+<script>
+  alert("Logged in Successfully");
+  window.location.href='/userprofile';
+
+</script>
+{% endifequal %}
+
+{% ifequal error "yes" %}
+<script>
+  alert("Something went wrong, Try Again");
+</script>
+{% endifequal %}
+
+
+{% endblock body %}
