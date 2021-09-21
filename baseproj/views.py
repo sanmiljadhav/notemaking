@@ -83,7 +83,7 @@ class UserProfileView(View):
             desc = form.cleaned_data['note_description']
             Notes.objects.create(user = u,note_title = title,note_description= desc)
             form = AddNoteForm()
-            return render(request,'userprofile.html',{'form':form})
+            return HttpResponseRedirect('/userprofile/')
             
             
 

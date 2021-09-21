@@ -34,3 +34,17 @@
 
 
 </script>
+
+
+
+
+<!--     
+    
+
+    
+
+    {% include "ajax.html" %}
+    id ="userprofile"
+id = "btnaddnote"
+
+     -->
