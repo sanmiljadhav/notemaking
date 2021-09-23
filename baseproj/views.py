@@ -127,7 +127,7 @@ class NotesUpdateView(View):
 #for sharing notes to other users
 class SharePostView(View):
     def get(self,request,id):
-        allusers=User.objects.all()
+        allusers=User.objects.exclude(username = request.user.username)
         return render(request,'searchuser.html',{'context':allusers})
     def post(self,request,id):
         email = request.POST.get('email')
@@ -140,8 +140,7 @@ class SharePostView(View):
             notes = Notes.objects.get(id = id)
             noteid=notes.id
            
-            notetitle=notes.note_title
-            notedesc = notes.note_description
+            
             u=User.objects.filter(username = request.user.username).first()   #current user
             SharedWith.objects.create(user = u,shared_user_id = user,noteid = noteid)
             print("note shared")
