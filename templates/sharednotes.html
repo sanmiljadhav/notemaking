@@ -1,0 +1,42 @@
+{% extends 'usernavigation.html' %} 
+{% block body %}
+<div class="container">
+<div class="row my-3">
+    {% for item in notes %}
+      <div class="col-md-4">
+
+       
+          <div class="card my-3" style="width: 18rem;">
+            
+              <div class="card-body">
+                
+                
+                 
+                  <h5 class="card-title"> {{item.note_title}}             </h5>
+                  
+                  <p class="card-text">{{item.note_description}}</p>
+                  <!-- Update -->
+                  <a href="{% url 'updatedata' item.id %}" class="btn btn-warning btn-sm">Edit</a>
+
+                  
+                  <!--
+                  
+                  <form action="{% url 'notesdelete' item.id %}" method="POST" class="d-inline"> 
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-sm" value="Delete">
+                  </form>
+                  -->
+                  
+              </div>
+             
+          </div>
+         
+         
+
+         
+          
+      </div>
+      {% endfor %}
+  </div>
+</div>
+{% endblock body%}

@@ -7,7 +7,10 @@ urlpatterns = [
     path('userprofile/',views.UserProfileView.as_view(),name = 'userprofile'),
     path('logout/',views.UserProfileLogout.as_view(),name = 'userlogout'),
     path('delete/<int:id>',views.NotesDeleteView.as_view(),name = 'notesdelete'),
-    path('<int:id>',views.NotesUpdateView.as_view(),name= 'updatedata')
+    path('<int:id>',views.NotesUpdateView.as_view(),name= 'updatedata'),
+    path('sharewith/<int:id>',views.SharePostView.as_view(),name = 'sharewith'),
+    path('sharednotes/',views.SharedNotesView.as_view(),name = 'sharednotes'),
+
     
 
     

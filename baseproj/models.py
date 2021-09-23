@@ -11,6 +11,17 @@ class Notes(models.Model):
         db_table = "notes"
 
 
+class SharedWith(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    shared_user_id = models.CharField(max_length=100)
+    noteid = models.IntegerField(default=0)
+    
+    class Meta:
+        db_table = "sharedwith"
+
+
+
+
 
 
 

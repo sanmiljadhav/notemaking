@@ -1,0 +1,38 @@
+{% extends 'usernavigation.html' %} {% block body %}
+<div class="container my-5">
+  <form method="POST">
+    {% csrf_token %}
+    <input
+      class="form-control me-2"
+      name="email"
+      type="search"
+      placeholder="Enter Email"
+      aria-label="Search"
+    />
+    <button class="btn btn-outline-success my-3" type="submit" class="d_inline">
+      Search
+    </button>
+  </form>
+
+  <hr />
+  <h3 class="my-3">You can Share along with these Usernames</h3>
+  <hr/>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in context %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{item.username}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body%}

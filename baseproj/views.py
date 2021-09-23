@@ -1,4 +1,5 @@
-from django.http.response import HttpResponseRedirect
+from django.http import request
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -7,7 +8,7 @@ from django.views.generic import View
 from . forms import Register
 from . forms import LoginForm
 from . forms import AddNoteForm
-from . models import Notes
+from . models import Notes, SharedWith
 
 from django.views.generic.base import RedirectView
 
@@ -123,25 +124,60 @@ class NotesUpdateView(View):
 
         
 
-"""
- if request.method == 'POST':
-        pi = Books.objects.get(pk = id)
-        print(pi)
-        form = AddpostForm(request.POST,instance=pi)
-        form.save()
-    else:
-        pi = Books.objects.get(pk = id)
-        form = AddpostForm(instance=pi)
-    return render(request,'updatebook.html',{'form':form})
+#for sharing notes to other users
+class SharePostView(View):
+    def get(self,request,id):
+        allusers=User.objects.all()
+        return render(request,'searchuser.html',{'context':allusers})
+    def post(self,request,id):
+        email = request.POST.get('email')
+        user = User.objects.filter(username = email).first()   #sending user
+        print(user)
+        
+        if user:
+            print("sanmil")
+            #currrent
+            notes = Notes.objects.get(id = id)
+            noteid=notes.id
+           
+            notetitle=notes.note_title
+            notedesc = notes.note_description
+            u=User.objects.filter(username = request.user.username).first()   #current user
+            SharedWith.objects.create(user = u,shared_user_id = user,noteid = noteid)
+            print("note shared")
+
+        return HttpResponseRedirect('/userprofile/')
+
 
 """
-    
-
-
-
-
+ u = User.objects.filter(username = request.user.username).first()
+            title = form.cleaned_data['note_title']
+            desc = form.cleaned_data['note_description']
+            Notes.objects.create(user = u,note_title = title,note_description= desc)
+            form = AddNoteForm()
+            return HttpResponseRedirect('/userprofile/')
+"""
         
 
+#sharewith me se logged in user ke shared notes ki id nikali and uske baad notes me se usi id ka data nikal ke populate 
+class SharedNotesView(View):
+    def get(self,request):
+        if request.user.is_authenticated:
+            user = User.objects.get(id = request.user.id)  #gives username
+            print(user)
+            notes = SharedWith.objects.filter(shared_user_id = user).values()
+            print(notes)
+            lista = []
+            for note in notes:
+                lista.append(note['noteid'])
+            print(lista)
+            notea=Notes.objects.filter(id__in=lista)
+            print(notea)
+            return render(request,'sharednotes.html',{'notes':notea})
+        else:
+            return HttpResponseRedirect('/userlogin/')
+
+    
 
 
 
